@@ -1,18 +1,3 @@
-<div style="width: 100% !important; display: block !important; margin: 0 !important; padding: 0 !important;">
-  <div style="display: flex !important; width: 100% !important; justify-content: space-between !important; margin-bottom: 20px !important;">
-    <figure style="width: calc(50% - 10px) !important; margin: 0 !important; padding: 0 !important; float: left;">
-      <img src="./images/corn_id.gif" 
-           alt="Left Image" 
-           style="width: 100% !important; height: auto !important; display: block !important;">
-    </figure>
-    <figure style="width: calc(50% - 10px) !important; margin: 0 !important; padding: 0 !important; float: right;">
-      <img src="./images/corn_h.gif" 
-           alt="Right Image" 
-           style="width: 100% !important; height: auto !important; display: block !important;">
-    </figure>
-  </div>
-</div>
-
 <figure style="width: 100% !important; margin: 0 !important; padding: 0 !important; clear: both !important;">
   <img src="./images/graphical_abstract.png" 
     alt="Teaser Image" 
