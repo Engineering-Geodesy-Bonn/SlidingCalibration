@@ -23,7 +23,7 @@ $$
 \mathbf x_{i_{[l]}}^{e}(t) = \mathbf T_{b}^{e}(t) \Delta \mathbf T_{s_{[l]}}^b(t) \mathbf T_{s_{[l]}}^b \mathbf x_{i}^{s_{[l]}}(t).
 $$
 
-where
+This direct georeferencing equation contains the following quantities:
 
 - $\mathbf x_{i_{[l]}}^{e}(t) $: Object point $i$ in the Earth coordinate system at time $(t)$.
 
@@ -55,5 +55,3 @@ The repository also contains Dockerfile. Please build and run the docker using t
 ## Data
 
 The wheat, corn and sugar beet dataset is provided via sciebo share: https://uni-bonn.sciebo.de/s/qgLQ8wfS7oMWase. Download the laser profile data (.bin) for both scanners and the trajectory files (.trj) and copy them into /input folder of the repository. Note that only one dataset can be placed in the input folder. 
-
-
