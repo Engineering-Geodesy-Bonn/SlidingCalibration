@@ -1,24 +1,20 @@
-<div style="width: 100%; max-width: 1000px; margin: 0 auto; box-sizing: border-box;">
-  <div style="display: flex; gap: 20px; width: 100%; margin: 0 0 20px 0;">
-    <figure style="flex: 1; margin: 0; padding: 0;">
-      <img src="./images/corn_id.gif" 
-           alt="Point cloud by scanner index" 
-           style="width: 100%; height: auto; display: block; border: 0;">
-    </figure>
-    <figure style="flex: 1; margin: 0; padding: 0;">
-      <img src="./images/corn_h.gif" 
-           alt="Point cloud by height" 
-           style="width: 100%; height: auto; display: block; border: 0;">
-    </figure>
+<div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; width: 100%; box-sizing: border-box;">
+  
+  <div style="grid-column: span 1;">
+    <img src="./images/corn_id.gif" style="width: 100%; height: auto; display: block;" alt="Point cloud by scanner index">
   </div>
-  <figure style="width: 100%; margin: 0; padding: 0; text-align: center;">
-    <img src="./images/graphical_abstract.png" 
-         alt="Teaser Image" 
-         style="width: 100%; height: auto; display: block; border: 0;">
-    <figcaption style="margin-top: 12px; text-align: center; line-height: 1.4; font-size: 0.9em; color: #333;">
+  
+  <div style="grid-column: span 1;">
+    <img src="./images/corn_h.gif" style="width: 100%; height: auto; display: block;" alt="Point cloud by height">
+  </div>
+
+  <figure style="grid-column: span 2; margin: 0; padding: 0; text-align: center;">
+    <img src="./images/graphical_abstract.png" style="width: 100%; height: auto; display: block;" alt="Teaser Image">
+    <figcaption style="margin-top: 12px; font-size: 0.9em; color: #333;">
       (c) Field robot and schematic structure of the kinematic laser scanning system and crop point clouds created with the field robot for Initial rigid mounting calibration, rigid ICP alignment, and our kinematic calibration approach.
     </figcaption>
   </figure>
+
 </div>
 
 ### Description
