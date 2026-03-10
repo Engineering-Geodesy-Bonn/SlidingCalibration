@@ -1,23 +1,33 @@
-<table style="width:110%">
+<table style="width:100%; table-layout:fixed;">
   <tr>
-    <td style="width:50%; text-align:center;">
-      <div style="display:flex; flex-direction:column; align-items:center;">
-        <img src="./images/corn_id.gif" style="max-width:100%; height:auto;">
-        <div style="text-align:center; margin-top:4px;">Point cloud colored by the scanner index</div>
-      </div>
+    <td style="width:50%; text-align:center; vertical-align:top;">
+      <figure style="margin:0;">
+        <img src="./images/corn_id.gif" style="width:100%; height:auto;" alt="Point cloud by scanner index">
+        <figcaption style="margin-top:4px;">
+          Point cloud colored by the scanner index
+        </figcaption>
+      </figure>
     </td>
-    <td style="width:50%; text-align:center;">
-      <div style="display:flex; flex-direction:column; align-items:center;">
-        <img src="./images/corn_h.gif" style="max-width:100%; height:auto;">
-        <div style="text-align:center; margin-top:4px;">Point cloud colored by the height</div>
-      </div>
+    <td style="width:50%; text-align:center; vertical-align:top;">
+      <figure style="margin:0;">
+        <img src="./images/corn_h.gif" style="width:100%; height:auto;" alt="Point cloud by height">
+        <figcaption style="margin-top:4px;">
+          Point cloud colored by the height
+        </figcaption>
+      </figure>
     </td>
   </tr>
 </table>
 
-<figure>
-  <img src="./images/graphical_abstract.png" alt="Teaser Image">
-  <figcaption>Consistency of the point clouds created with the two laser scanners of our field robot for a) Initial rigid mounting calibration, b) our ICP method (rigid transformation), and c) our sliding ICP method.</figcaption>
+<figure style="margin-top:16px; text-align:center;">
+  <img src="./images/graphical_abstract.png"
+       alt="Teaser Image"
+       style="max-width:100%; width:100%; height:auto;">
+  <figcaption style="margin-top:4px;">
+    Consistency of the point clouds created with the two laser scanners
+    of our field robot for a) Initial rigid mounting calibration, b) our
+    ICP method (rigid transformation), and c) our sliding ICP method.
+  </figcaption>
 </figure>
 
 ### Description
