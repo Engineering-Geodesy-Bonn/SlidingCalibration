@@ -2,16 +2,20 @@
   <tr>
     <td style="width:50%; text-align:center; vertical-align:top;">
       <figure style="margin:0;">
-        <img src="./images/corn_id.gif" style="width:100%; height:auto;" alt="Point cloud by scanner index">
-        <figcaption style="margin-top:4px;">
+        <img src="./images/corn_id.gif"
+             style="width:100%; height:auto; display:block; margin:0 auto;"
+             alt="Point cloud by scanner index">
+        <figcaption style="margin-top:4px; display:block; clear:both; text-align:center;">
           Point cloud colored by the scanner index
         </figcaption>
       </figure>
     </td>
     <td style="width:50%; text-align:center; vertical-align:top;">
       <figure style="margin:0;">
-        <img src="./images/corn_h.gif" style="width:100%; height:auto;" alt="Point cloud by height">
-        <figcaption style="margin-top:4px;">
+        <img src="./images/corn_h.gif"
+             style="width:100%; height:auto; display:block; margin:0 auto;"
+             alt="Point cloud by height">
+        <figcaption style="margin-top:4px; display:block; clear:both; text-align:center;">
           Point cloud colored by the height
         </figcaption>
       </figure>
@@ -24,9 +28,7 @@
        alt="Teaser Image"
        style="max-width:100%; width:100%; height:auto;">
   <figcaption style="margin-top:4px;">
-    Consistency of the point clouds created with the two laser scanners
-    of our field robot for a) Initial rigid mounting calibration, b) our
-    ICP method (rigid transformation), and c) our sliding ICP method.
+    Field robot and schematic structure of the kinematic laser scanning system and crop point clouds created with the field robot for a) Initial rigid mounting calibration, b) rigid ICP alignment, and c) our kinematic calibration approach.
   </figcaption>
 </figure>
 
