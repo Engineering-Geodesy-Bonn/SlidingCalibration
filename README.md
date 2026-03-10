@@ -11,15 +11,16 @@
            style="width: 100% !important; height: auto !important; display: block !important;">
     </figure>
   </div>
-  <figure style="width: 100% !important; margin: 0 !important; padding: 0 !important; clear: both !important;">
-    <img src="./images/graphical_abstract.png" 
-         alt="Teaser Image" 
-         style="width: 100% !important; height: auto !important; display: block !important;">
-    <figcaption style="margin-top: 12px !important; text-align: center !important; font-family: sans-serif !important; font-size: 0.9em !important;">
-      (c) Field robot and schematic structure...
-    </figcaption>
-  </figure>
 </div>
+
+<figure style="width: 100% !important; margin: 0 !important; padding: 0 !important; clear: both !important;">
+  <img src="./images/graphical_abstract.png" 
+    alt="Teaser Image" 
+    style="width: 100% !important; height: auto !important; display: block !important;">
+  <figcaption style="margin-top: 12px !important; text-align: center !important; font-family: sans-serif !important; font-size: 0.9em !important;">
+    (c) Field robot and schematic structure...
+  </figcaption>
+</figure>
 
 ### Description
 
