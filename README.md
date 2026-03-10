@@ -4,7 +4,7 @@
       <img src="./images/corn_id.gif" alt="Scanner Index" style="width: 110%; height: auto; display: block;">
     </td>
     <td style="padding: 0 0 20px 10px; vertical-align: top; border: none;">
-      <img src="./images/corn_h.gif" alt="Height" style="width: 110%; height: auto; display: block;">
+      <img src="./images/corn_h.gif" alt="Height" style="width: 130%; height: auto; display: block;">
     </td>
   </tr>
   
