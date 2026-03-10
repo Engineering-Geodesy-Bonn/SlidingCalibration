@@ -22,7 +22,7 @@
 
 ### Description
 
-This repository contains a sliding ICP approach implemented for the kinematic dual laser scanning system of our ground Unmanned Ground Vehicle (UGV), as described in our previous work ([IEEE RAM](https://ieeexplore.ieee.org/abstract/document/10302421), [Arxiv Version](https://arxiv.org/pdf/2310.11516)). The robot is designed to generate high-resolution point clouds of various crops such as beans, wheat, soybeans, sugar beets, corn, and potatoes, in agricultural fields. The U-shape design of the 2×2×2m robot causes the scanner mounting calibration relative to the GNSS/IMU trajectory to change over time when driving in uneven field environments. To address this problem, the method estimates time-dependent mounting calibration updates by:
+This repository contains the code of a kinematic calibration approach implemented for the kinematic dual laser scanning system of our ground Unmanned Ground Vehicle (UGV). The robot is designed to generate high-resolution 3D point clouds of various crops such as beans, wheat, soybeans, sugar beets, corn, and potatoes, in agricultural fields. The U-shape design of the 2×2×2m robot causes the scanner mounting calibration relative to the GNSS/IMU trajectory to change over time when driving in uneven field environments. To address this problem, the method estimates time-dependent mounting calibration updates by:
 
 1. Creating initial point clouds using rigid mounting calibration of both scanners
 2. Application of an sliding window approach to cut point clouds along the vehicles trajectory
