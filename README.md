@@ -23,15 +23,14 @@
   </tr>
 </table>
 
-<figure style="margin-top:16px; text-align:center; max-width:100%;">
+<div style="margin-top:16px; text-align:center; width:100%; clear:both;">
   <img src="./images/graphical_abstract.png"
        alt="Teaser Image"
-       style="max-width:100%; width:100%; height:auto; display:block;">
-  <figcaption style="margin-top:8px; text-align:center; width:100%; box-sizing:border-box;">
+       style="max-width:100%; height:auto; display:block; margin:0 auto;">
+  <p style="margin-top:8px; text-align:center; width:100%; margin-left:0; margin-right:0; padding:0;">
     Field robot and schematic structure of the kinematic laser scanning system and crop point clouds created with the field robot for a) Initial rigid mounting calibration, b) rigid ICP alignment, and c) our kinematic calibration approach.
-  </figcaption>
-</figure>
-
+  </p>
+</div>
 ### Description
 
 This repository contains the code of a kinematic calibration approach implemented for the kinematic dual laser scanning system of our ground Unmanned Ground Vehicle (UGV). The robot is designed to generate high-resolution 3D point clouds of various crops such as beans, wheat, soybeans, sugar beets, corn, and potatoes, in agricultural fields. The U-shape design of the 2×2×2m robot causes the scanner mounting calibration relative to the GNSS/IMU trajectory to change over time when driving in uneven field environments. To address this problem, the method estimates time-dependent mounting calibration updates by:
