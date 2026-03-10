@@ -1,22 +1,32 @@
-<table style="width: 100%; border-collapse: collapse; border: none; padding: 0; margin: 0; table-layout: fixed;">
-  <tr>
-    <td style="padding: 0 10px 20px 0; vertical-align: top; border: none;">
-      <img src="./images/corn_id.gif" alt="Scanner Index" style="width: 110%; height: auto; display: block;">
-    </td>
-    <td style="padding: 0 0 20px 10px; vertical-align: top; border: none;">
-      <img src="./images/corn_h.gif" alt="Height" style="width: 130%; height: auto; display: block;">
-    </td>
-  </tr>
-  
-  <tr>
-    <td colspan="2" style="padding: 0; border: none;">
-      <img src="./images/graphical_abstract.png" alt="Teaser Image" style="width: 100%; height: auto; display: block;">
-      <p style="margin-top: 12px; text-align: center; line-height: 1.4; font-family: sans-serif; font-size: 0.9em; color: #333;">
-        (c) Field robot and schematic structure of the kinematic laser scanning system and crop point clouds created with the field robot for Initial rigid mounting calibration, rigid ICP alignment, and our kinematic calibration approach.
-      </p>
-    </td>
-  </tr>
-</table>
+<div style="width: 100%; display: block; margin: 0; padding: 0;">
+  <table style="width: 100%; border-collapse: collapse; border: none; margin: 0; padding: 0; table-layout: fixed;">
+    <tr>
+      <td style="width: 50%; padding-right: 10px; border: none; vertical-align: top;">
+        <img src="./images/corn_id.gif" 
+             style="width: 100%; height: auto; display: block; margin: 0;" 
+             alt="Scanner Index">
+      </td>
+      <td style="width: 50%; padding-left: 10px; border: none; vertical-align: top;">
+        <img src="./images/corn_h.gif" 
+             style="width: 100%; height: auto; display: block; margin: 0;" 
+             alt="Height">
+      </td>
+    </tr>
+    <tr style="height: 20px;">
+      <td colspan="2" style="border: none;"></td>
+    </tr>
+    <tr>
+      <td colspan="2" style="width: 100%; padding: 0; border: none;">
+        <img src="./images/graphical_abstract.png" 
+             style="width: 100%; height: auto; display: block; margin: 0;" 
+             alt="Teaser Image">
+        <p style="margin-top: 12px; text-align: center; font-family: sans-serif; font-size: 0.9em; line-height: 1.4; color: #333;">
+          (c) Field robot and schematic structure of the kinematic laser scanning system and crop point clouds created with the field robot for Initial rigid mounting calibration, rigid ICP alignment, and our kinematic calibration approach.
+        </p>
+      </td>
+    </tr>
+  </table>
+</div>
 
 ### Description
 
