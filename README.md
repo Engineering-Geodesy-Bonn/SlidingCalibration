@@ -5,9 +5,6 @@
         <img src="./images/corn_id.gif"
              style="width:100%; height:auto; display:block; margin:0 auto;"
              alt="Point cloud by scanner index">
-        <figcaption style="margin-top:4px; display:block; clear:both; text-align:center;">
-          Index colored
-        </figcaption>
       </figure>
     </td>
     <td style="width:50%; text-align:center; vertical-align:top;">
@@ -15,9 +12,6 @@
         <img src="./images/corn_h.gif"
              style="width:100%; height:auto; display:block; margin:0 auto;"
              alt="Point cloud by height">
-        <figcaption style="margin-top:4px; display:block; clear:both; text-align:center;">
-          Height colored
-        </figcaption>
       </figure>
     </td>
   </tr>
