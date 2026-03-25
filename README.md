@@ -69,3 +69,7 @@ The crop plots are measured by the field robot platform as described above from 
     alt="Teaser Image" 
     style="width: 100% !important; height: auto !important; display: block !important;">
 </figure>
+
+# Acknowledgments
+
+This work has been funded by the Deutsche Forschungsgemeinschaft (DFG, German Research Foundation) under Germany’s Excellence Strategy, EXC-2070 – 390732324 – PhenoRob.
