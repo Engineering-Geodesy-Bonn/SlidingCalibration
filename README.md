@@ -23,7 +23,7 @@ $$
 \Huge \mathbf x_{i_{[l]}}^{e}(t) = \mathbf T_{b}^{e}(t) \Delta \mathbf T_{s_{[l]}}^b(t) \mathbf T_{s_{[l]}}^b \mathbf x_{i}^{s_{[l]}}(t).
 $$
 
-This direct georeferencing equation contains the following quantities:
+This direct georeferencing equation contains the following transformations:
 
 - $\Large \mathbf x_{i_{[l]}}^{e}(t) $: Object point $i$ in the Earth coordinate system at time $(t)$.
 
@@ -32,6 +32,7 @@ This direct georeferencing equation contains the following quantities:
 - $\Large \Delta \mathbf T_{s_{[l]}}^b(t)$: Mounting calibration updates for the scanner $s_{[l]}$ in the body referenec frame over time $(t)$.
 
 - $\Large \mathbf T_{s_{[l]}}^b$: Rigid mounting calibration for the sensor $s_{[l]}$ in the body reference frame. It is estimated using a plane-based calibration approach as described here: [IEEE ICRA24](https://ieeexplore.ieee.org/document/10610208), [Arxiv Version](https://arxiv.org/pdf/2403.17788)
+
 
 - $\Large \mathbf x_{i}^{s_{[l]}}(t)$: Object point $i$ in the sensor $s_{[l]}$ reference frame at time $(t)$.
 
