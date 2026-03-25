@@ -52,7 +52,7 @@ The repository also contains Dockerfile. Please build and run the docker using t
   docker build -t sliding_icp_docker .
   docker run -it --name your_test_run sliding_icp_docker:latest 
   ```
-### FieldPheno4D dataset
+# FieldPheno4D dataset
 
 The kinematic calibration method is tested on the "FieldPheno4D" dataset available at https://doi.org/10.60507/FK2/HYI2DS. It contains spatio-temporal pointclouds georeferenced with an accuracy of some centimeter containing crop varieties of bean, wheat, soybean, corn, potato, sugar beet, and brassica planted in rows in crop plots with dimensions of 7.5 times 1.5 meter at shown in the following orthophoto.
 
