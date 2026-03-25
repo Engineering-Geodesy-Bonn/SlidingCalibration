@@ -32,6 +32,7 @@ class pointcloud:
         self.intensity = np.zeros( (no_points,), dtype=float )
         self.normals = None
         self.colors = None
+        self.id = None
 
         # Systems name the point cloud belongs to
         self.system = system
@@ -60,29 +61,38 @@ class pointcloud:
         if format == ".las":
 
             header = laspy.LasHeader(point_format=3, version="1.2")
-            #header.add_extra_dim(laspy.ExtraBytesParams(name="ids", type=np.uint64))
-
-            #header.add_extra_dim(laspy.ExtraBytesParams(name="h", type=np.float32))
 
             header.offsets = offset
             header.scales = np.array([0.001, 0.001, 0.001])
 
-            las = laspy.LasData( header )
+            # Add extra dimensions BEFORE creating LasData object
+            if self.id is not None:
+                header.add_extra_dim(laspy.ExtraBytesParams(name="ids", type=np.uint64))
+
+            if self.xyz is not None:
+                header.add_extra_dim(laspy.ExtraBytesParams(name="height", type=np.float32))
+
+            # NOW create the LasData object with the modified header
+            las = laspy.LasData(header)
+
             las.x = (self.xyz[:,0]) + offset[0]
             las.y = (self.xyz[:,1]) + offset[1]
             las.z = (self.xyz[:,2]) + offset[2]
 
             las.intensity = self.intensity 
             las.gps_time = np.ravel(self.time)
-            #las.h = self.xyz[:,2]
 
-            las.write( path+filename+".las" )
+            # Now assign values to the extra fields
+            if self.id is not None:
+                las.ids = np.asarray(self.id, dtype=np.uint64).flatten()
+
+            if self.xyz is not None:
+                las.height = np.asarray(self.xyz[:,2] - self.xyz[:,2].min(), dtype=np.float32).flatten()
+
+            las.write(path + filename + ".las")
         
         print("| ")
 
-
-
-     
     def insert_points(self, time, xyz, intensity, idxA, idxB, id) -> None:
         
         #print("Inset points in point cloud object, idxA = ", idxA,  " idxB = ", idxB, "total size: ", len(self.time) )
@@ -176,8 +186,6 @@ class pointcloud:
             PC_sub.xyzc = np.array([np.mean(self.xyz[:,0]), np.mean(self.xyz[:,1]), np.mean(self.xyz[:,2])])
 
             return PC_sub, np.array(idx)
-
-        
     
     def select_by_index( self, idx ):
         
@@ -200,8 +208,6 @@ class pointcloud:
         
         return pc
     
-
-
 
     def concatenate( self, pc ):
         

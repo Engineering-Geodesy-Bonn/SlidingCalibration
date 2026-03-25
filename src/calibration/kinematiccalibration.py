@@ -26,8 +26,8 @@ class kinematiccalibration:
 
     def write_to_file(self, path_out, fname):
 
-        np.savetxt( fname=path_out+"parameter/x_"    +fname+".txt", X=self.x )
-        np.savetxt( fname=path_out+"parameter/xint_" +fname+".txt", X=self.xint )
+        np.savetxt( fname=path_out+"x_"    +fname+".txt", X=self.x )
+        np.savetxt( fname=path_out+"xint_" +fname+".txt", X=self.xint )
 
     def interpolate(self, timestamps):
 

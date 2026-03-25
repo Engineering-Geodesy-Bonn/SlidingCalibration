@@ -1,63 +1,106 @@
-from src.core.SlidingICP import SlidingICP
+from src.core.KinematicCalibration import KinematicCalibration
 
 from colorama import init, Fore, Style
 import click
-
+import shutil
+import os
+import glob
 
 @click.command()
-@click.option("--path_data", "-p", default="input/", type=str, help="Path to the data directory. Directory should contain ...")
-@click.option("--path_out", "-p", default="output/", type=str, help="Path to the output data directory")
-@click.option("--path_calibration", "-p", default="input/calibration/", type=str, help="Path to the static calibration of the laser scanners")
-@click.option("--configfile", "-p", default="config/sICPconfig_withrejection.json", type=str, help="Config file of the sliding ICP")
+@click.option("--parent_dir", "-pa", default="/mnt/syn180/241111_FieldPheno4D_multi_crop_multi_modal/01_cropplotdata/New_structure", type=str, help="Path to the dataset directory")
+@click.option("--output_dir", "-pb", default="output/", type=str, help="Path to the output data directory")
+@click.option("--calibration_dir", "-pc", default="input/calibration/", type=str, help="Path to the static calibration of the laser scanners")
+@click.option("--configfile", "-pd", default="config/kin_calibration_config.json", type=str, help="Config file of the kinematic calibration")
+@click.option("--plot_id", "-pe", default="P144", type=str, help="Plot id to process")
+@click.option("--date", "-pf", default="230516", type=str, help="Plot id to process")
 
-def main(path_data,
-         path_out,
-         path_calibration,
-         configfile):
+def main(parent_dir,
+         output_dir,
+         calibration_dir,
+         configfile,
+         plot_id,
+         date):
+    
+    # Directory of the current dataset
+    dataset_dir = os.path.join(parent_dir, plot_id, date)
     
     #####################################################################################
-    # 1) SlidingICP
+    # 2) Initialization and data preparation
 
     # Initialize 
-    sICP = SlidingICP(path_data,
-                      path_out,
-                      path_calibration,
-                      configfile)
+    kin_cal = KinematicCalibration( parent_dir,
+                                    output_dir,
+                                    calibration_dir,
+                                    configfile )
     
-    sICP.print_info()
+    # Copy data from dataset path to local repo
+    kin_cal.copy_data( plot_id, date )
     
-    # Load sICP configfile
-    sICP.loadconfig()
+    # Print dataset info
+    kin_cal.print_info()
+
+    # Load kinematic calibration config file
+    kin_cal.loadconfig()
 
     # Load static calibration from path
-    sICP.loadcalibration()
+    kin_cal.loadcalibration()
 
     # Load data from path
-    sICP.loaddata()
+    kin_cal.loaddata()
     
-    # Create initial point cloud and write to outpath
-    pcl, pcr = sICP.create_pointcloud( calibration = "static" )
-    pcl.write_to_file( path = sICP.path_out, filename = "pc_l_i", offset = sICP.config.txyz )
-    pcr.write_to_file( path = sICP.path_out, filename = "pc_r_i", offset = sICP.config.txyz )
-    
-    # Run alignment
-    sICP.run()
-    
-    #####################################################################################
-    # 2) Compute time-dependent calibration from SlidingICP transformations
+    # Create initial point cloud with static calibration parameter (optional)
+    #pcl, pcr = kin_cal.create_pointcloud( calibration = "static" )
+    #pc_s = pcl.concatenate(pcr)
 
-    sICP.compute_kinematic_calibration_parameter()
+    #pc_s.write_to_file( path = kin_cal.output_dir, filename = "pc_static_calibration", offset = kin_cal.config.txyz )
+
+    #####################################################################################
+    # 2) Kinematic calibration
+
+    # Run alignment
+    kin_cal.run()
+
+    # Compute kinematic calibration parameter
+    kin_cal.compute_kinematic_calibration_parameter()
 
     #####################################################################################
     # 3) Create final point clouds with the time-dependent calibration parameter
 
-    pcl, pcr = sICP.create_pointcloud( calibration = "kinematic" )
+    pcl, pcr = kin_cal.create_pointcloud( calibration = "kinematic" )
+
+    # Merge point clouds to one
+    pc = pcl.concatenate(pcr)
 
     # Write point clouds to file
-    pcl.write_to_file( path = sICP.path_out, filename = "pc_l_sICP", offset = sICP.config.txyz )
-    pcr.write_to_file( path = sICP.path_out, filename = "pc_r_sICP", offset = sICP.config.txyz )
+    pc.write_to_file( path = kin_cal.output_dir, filename = "pc_kinematic_calibration", offset = kin_cal.config.txyz )
 
-    print("| SlidingICP executed successfully! ")
+    #####################################################################################
+    # 4) Copy files back to dataset folder structure (optional)
+    
+    # 4.1 Calibration files
+    cal_files = glob.glob(os.path.join("output/", "*.txt"))
+
+    # Copy each file
+    for file_path in cal_files:
+        filename = os.path.basename(file_path)
+        destination_path = os.path.join(os.path.join(dataset_dir,"03_calibration"), filename)
+
+        try:
+            shutil.copy(file_path, destination_path)
+        except Exception as e:
+            continue
+
+    # 4.2 Point clouds
+    pc_files = glob.glob(os.path.join("output/", "*.las"))
+
+    # Copy each file
+    for file_path in pc_files:
+        filename = os.path.basename(file_path)
+        destination_path = os.path.join(os.path.join(dataset_dir,"04_pointcloud"), filename)
+        try:
+            shutil.copy(file_path, destination_path)
+        except Exception as e:
+            continue
 
 if __name__ == "__main__":
     main()

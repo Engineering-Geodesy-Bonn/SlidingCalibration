@@ -6,6 +6,8 @@ import matplotlib.pyplot as plt
 import os
 import pandas as pd
 from colorama import init, Fore, Style
+import shutil
+import glob
 
 # Import from src folder
 from src.calibration.calibration import calibration
@@ -20,7 +22,7 @@ from src.icp.SymPlane2PlaneICP import SymPlane2PlaneICP
 # Import base functions
 from src.base.base import RotmatX, RotmatY, RotmatZ, Rotmat2Euler, Euler2RotMat
 
-class SlidingICP:
+class KinematicCalibration:
 
     # System calibration of the left and right scanner
     calL: calibration
@@ -46,12 +48,12 @@ class SlidingICP:
     idxR: list
 
     # Input & Output pathes
-    path_data: str
-    path_out: str
-    path_calibration: str
+    parent_dir: str
+    output_dir: str
+    calibration_dir: str
     configfile: str
 
-    def __init__(self, path_data, path_out, path_calibration, configfile):
+    def __init__(self, parent_dir, output_dir, calibration_dir, configfile):
         """
         """
 
@@ -67,9 +69,9 @@ class SlidingICP:
         self.xlist = []
         self.idxL = []
         self.idxR = []
-        self.path_data = path_data
-        self.path_out = path_out
-        self.path_calibration = path_calibration
+        self.parent_dir = parent_dir
+        self.output_dir = output_dir
+        self.calibration_dir = calibration_dir
         self.configfile = configfile
 
     def print_info(self):
@@ -84,32 +86,100 @@ class SlidingICP:
             
         t = time.strftime("%H:%M:%S")
         print(( f"| {Style.BRIGHT}{Fore.GREEN}{t + ' Dataset info '}{Style.RESET_ALL}" ))
-        print("| - path to data:   ", self.path_data)
-        print("| - path to output: ", self.path_out)
-        print("| - path to calibration file: ", self.path_calibration)
+        print("| - path to data:   ", self.parent_dir)
+        print("| - path to output: ", self.output_dir)
+        print("| - path to calibration file: ", self.calibration_dir)
         print("| - path to config file: ", self.configfile)
         print("| ")
+
+    def copy_data(self, plot_id, date):
+        """Copy all .trj and .bin files from the pataset directory to local repo"""
+
+        print(( " ____________________________________________________________________________\n"
+                "| \n"
+               f"| {Style.BRIGHT}{Fore.MAGENTA}{'Copy data from dataset directory'}{Style.RESET_ALL}\n"
+               f"|"  ))
+
+        # Clear input path from old files
+        self.clear_input_path("input/")
+
+        print("| copy files from dataset directory to local repo ...")
+
+        # Create path to copy from
+        full_dir = os.path.join(self.parent_dir, plot_id, date)
+
+        # 1) Copy laserprofiles
+
+        # Get filenames of the laser profiles files
+        laser_dir = os.path.join(full_dir, "01_laserprofiles")
+        lmi_l_str = [f for f in os.listdir(laser_dir) if f.endswith('l.bin')][0]
+        lmi_r_str = [f for f in os.listdir(laser_dir) if f.endswith('r.bin')][0]
+
+        shutil.copy2(os.path.join(laser_dir, lmi_l_str), "input/")
+        shutil.copy2(os.path.join(laser_dir, lmi_r_str), "input/")
+
+        # 2) Copy trajectories
+
+        # Get filenames of the trajectories
+        traj_dir = os.path.join(full_dir, "02_trajectory")
+        trj_l_str = [f for f in os.listdir(traj_dir) if f.endswith('l.trj')][0]
+        trj_r_str = [f for f in os.listdir(traj_dir) if f.endswith('r.trj')][0]
+
+        shutil.copy2(os.path.join(traj_dir, trj_l_str), "input/")
+        shutil.copy2(os.path.join(traj_dir, trj_r_str), "input/")
+        
+
+        print("| ")
+
+    def clear_input_path(self, folder_path):
+        """Delete all .trj and .bin files in the specified folder"""
+        
+        if not os.path.exists(folder_path):
+            print(f"Folder {folder_path} does not exist")
+            return
+        
+        # Find all .trj and .bin files
+        trj_files = glob.glob(os.path.join(folder_path, "*.trj"))
+        bin_files = glob.glob(os.path.join(folder_path, "*.bin"))
+        
+        all_files = trj_files + bin_files
+        
+        if not all_files:
+            print("No .trj or .bin files found")
+            return
+        
+        deleted_count = 0
+        for file_path in all_files:
+            try:
+                os.remove(file_path)
+                print(f"| Cleaned: {file_path}")
+                deleted_count += 1
+            except OSError as e:
+                print(f"Error deleting {file_path}: {e}")
+        
+        print(f"| Total files deleted: {deleted_count}")
+
 
     def loaddata(self):
         """
         """   
 
         # Get filenames of the trajectories
-        trj_l_str = [f for f in os.listdir(self.path_data) if f.endswith('l.trj')][0]
-        trj_r_str = [f for f in os.listdir(self.path_data) if f.endswith('r.trj')][0]
+        trj_l_str = [f for f in os.listdir("input/") if f.endswith('l.trj')][0]
+        trj_r_str = [f for f in os.listdir("input/") if f.endswith('r.trj')][0]
         
         # Read trajectories
-        self.TL.read_from_file( path_to_file = self.path_data + trj_l_str, offset_xyz = self.config.txyz )
-        self.TR.read_from_file( path_to_file = self.path_data + trj_r_str, offset_xyz = self.config.txyz )
+        self.TL.read_from_file( path_to_file = "input/" + trj_l_str, offset_xyz = self.config.txyz )
+        self.TR.read_from_file( path_to_file = "input/" + trj_r_str, offset_xyz = self.config.txyz )
         
         # Get filenames of the laserprofiles
-        lmi_l_str = [f for f in os.listdir(self.path_data) if f.endswith('l.bin')][0]
-        lmi_r_str = [f for f in os.listdir(self.path_data) if f.endswith('r.bin')][0]
+        lmi_l_str = [f for f in os.listdir("input/") if f.endswith('l.bin')][0]
+        lmi_r_str = [f for f in os.listdir("input/") if f.endswith('r.bin')][0]
 
         # Read laser data
-        self.lmidataL.readbin( self.path_data+lmi_l_str )
-        self.lmidataR.readbin( self.path_data+lmi_r_str )
-
+        self.lmidataL.readbin( "input/"+lmi_l_str )
+        self.lmidataR.readbin( "input/"+lmi_r_str )
+        
         # __________________________________________________________
         # Intersect and interpolate data
         #
@@ -130,14 +200,14 @@ class SlidingICP:
         """
         """
 
-        self.config.writeToJson( self.path_out+"config/sICPconfig.json" )
+        self.config.writeToJson( "config/sICPconfig.json" )
 
     def loadcalibration(self):
         """
         """
 
-        self.calL.read_calibration_from_xml( self.path_calibration + "system_config_lmi_l.xml" )
-        self.calR.read_calibration_from_xml( self.path_calibration + "system_config_lmi_r.xml" )
+        self.calL.read_calibration_from_xml( self.calibration_dir + "system_config_lmi_l.xml" )
+        self.calR.read_calibration_from_xml( self.calibration_dir + "system_config_lmi_r.xml" )
 
     def create_pointcloud(self, calibration = "static"):
         """
@@ -257,7 +327,7 @@ class SlidingICP:
                                "timestamp": timei })
         
         # Write parameter correlation matrix to file
-        with open(self.path_out+"parameter/Px.txt", "w") as f:   
+        with open(self.output_dir+"Px.txt", "w") as f:   
             for transformation in self.xlist:
                 left_indices = ",".join(map(str, transformation['left_indices']))
                 right_indices = ",".join(map(str, transformation['right_indices']))
@@ -269,7 +339,7 @@ class SlidingICP:
         """
         """
         # Load icp parameter from file
-        icp_param = np.loadtxt( fname=self.path_out+"parameter/Px.txt", delimiter="," )
+        icp_param = np.loadtxt( fname=self.output_dir+"Px.txt", delimiter="," )
 
         icp_param = icp_param[~np.isnan(icp_param).any(axis=1)]
 
@@ -348,8 +418,8 @@ class SlidingICP:
         #self.kcalL.plot( self.calL )
         #self.kcalR.plot( self.calR )
 
-        self.kcalL.write_to_file(path_out=self.path_out, fname="l")
-        self.kcalR.write_to_file(path_out=self.path_out, fname="r")
+        self.kcalL.write_to_file(path_out=self.output_dir, fname="l")
+        self.kcalR.write_to_file(path_out=self.output_dir, fname="r")
         
 
     def load_transformation_parameters(self, filename, left):
